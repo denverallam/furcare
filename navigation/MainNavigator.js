@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, StyleSheet } from 'react-native'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import ReportScreen from '../screens/ReportScreen';
@@ -9,6 +10,7 @@ import AdoptionScreen from '../screens/AdoptionScreen';
 import ChatScreen from '../screens/ChatScreen';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../constants/colors';
+import LogoutScreen from '../screens/LogoutScreen';
 
 const defaultStackNavOptions = {
     defaultNavigationOptions: {
@@ -18,6 +20,13 @@ const defaultStackNavOptions = {
         headerTintColor: 'white'
     }
 }
+
+const styles = StyleSheet.create({
+    text: {
+        color: colors.accent
+    }
+})
+
 
 const HomeNavigator = createStackNavigator({
     Home: { 
@@ -48,11 +57,11 @@ const ChatNavigator = createStackNavigator({
     Chat: ChatScreen
 }, defaultStackNavOptions)
 
-const styles = StyleSheet.create({
-    text: {
-        color: colors.accent
-    }
-})
+
+const UserNavigator = createStackNavigator({
+    User: LogoutScreen
+}, defaultStackNavOptions)
+
 
 const MainNavigator = createMaterialBottomTabNavigator(
     {
@@ -72,7 +81,7 @@ const MainNavigator = createMaterialBottomTabNavigator(
             navigationOptions: {
                 tabBarLabel: <Text style={styles.text}>Report</Text>,
                 tabBarIcon: (tabInfo) => {
-                    return <Ionicons name='ios-camera' size={25} color={colors.accent} />
+                    return <Ionicons name='megaphone' size={25} color={colors.accent} />
                 },
                 tabBarColor: 'white'
             }
@@ -82,7 +91,7 @@ const MainNavigator = createMaterialBottomTabNavigator(
             navigationOptions: {
                 tabBarLabel: <Text style={styles.text}>Adopt</Text>,
                 tabBarIcon: (tabInfo) => {
-                    return <Ionicons name='ios-heart' size={25} color={colors.accent} />
+                    return <Ionicons name='paw' size={25} color={colors.accent} />
                 },
                 tabBarColor: 'white'
             },
@@ -94,11 +103,22 @@ const MainNavigator = createMaterialBottomTabNavigator(
                 tabBarIcon: (tabInfo) => {
                     return <Ionicons name='ios-chatbubble' size={25} color={colors.accent} />
                 },
+                tabBarBadge: 69,
+                tabBarColor: 'white'
+            }
+        },
+        User: {
+            screen: UserNavigator,
+            navigationOptions: {
+                tabBarLabel: <Text style={styles.text}>User</Text>,
+                tabBarIcon: (tabInfo) => {
+                    return <Ionicons name='person' size={25} color={colors.accent} />
+                },
+
                 tabBarColor: 'white'
             }
         }
     })
-
 
 
 

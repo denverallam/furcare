@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
+import HeaderButton from '../components/HeaderButton';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 const AdoptionScreen = props => {
     return (
@@ -14,6 +16,22 @@ const AdoptionScreen = props => {
         </View>
     )
 }
+
+// AdoptionScreen.navigationOptions = navData => {
+//     return {
+//       headerLeft: (
+//         <HeaderButtons HeaderButtonComponent={HeaderButton}>
+//           <Item
+//             title="Menu"
+//             iconName="ios-menu"
+//             onPress={() => {
+//               navData.navigation.toggleDrawer();
+//             }}
+//           />
+//         </HeaderButtons>
+//       )
+//     };
+// };
 
 const styles = StyleSheet.create({
     screen: {
