@@ -1,21 +1,18 @@
-import { LOG_IN, LOG_OUT } from "../constants/constants"
+import { LOG_OUT, USER_STATE_CHANGE } from "../constants/constants"
 
 const initialState = {
-    isLoggedIn: false,
-    name: '',
-    password: ''
+    user: null
 }
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOG_IN:
-            return { ...state, isLoggedIn: true }
+        case USER_STATE_CHANGE:
+            return { ...state, user: action.payload }
         case LOG_OUT:
-            return { ...state, isLoggedIn: false }
+            return { ...state, user: action.payload }
         default:
             return state
     }
-
 }
 
 export default userReducer

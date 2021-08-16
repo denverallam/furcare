@@ -11,6 +11,8 @@ import ChatScreen from '../screens/ChatScreen';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../constants/colors';
 import LogoutScreen from '../screens/LogoutScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 const defaultStackNavOptions = {
     defaultNavigationOptions: {
@@ -27,6 +29,10 @@ const styles = StyleSheet.create({
     }
 })
 
+const LoginNavigator = createStackNavigator({
+    Login: LoginScreen,
+    Register: RegisterScreen
+})
 
 const HomeNavigator = createStackNavigator({
     Home: { 

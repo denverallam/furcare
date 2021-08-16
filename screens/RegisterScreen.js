@@ -1,36 +1,48 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     StyleSheet,
     Text,
     View,
     TextInput,
     Button,
-    TouchableOpacity,
     Alert
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
-import { login } from '../firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../firebase';
 import { fetchUser } from '../store/actions/user';
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
 
     const [user, setUser] = useState({
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: ''
     })
 
-    const dispatch  = useDispatch()
 
-    const loginHandler = () => {
-        login(user.email,user.password)
-        dispatch(fetchUser())
+    const registerHandler = () => {
+        register(user)
     }
+
 
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
+                <Text style={styles.text}>First Name</Text>
+                <TextInput
+                    placeholder="Name"
+                    onChangeText={firstName => setUser({ ...user, firstName: firstName })}
+                    value={user.name}
+                    style={styles.input}
+                />
+                <Text style={styles.text}>Last Name</Text>
+                <TextInput
+                    placeholder="Name"
+                    onChangeText={lastName => setUser({ ...user, lastName: lastName })}
+                    value={user.name}
+                    style={styles.input}
+                />
                 <Text style={styles.text}>Email</Text>
                 <TextInput
                     placeholder="Email"
@@ -43,26 +55,11 @@ const LoginScreen = () => {
                     placeholder="Password"
                     onChangeText={password => setUser({ ...user, password: password })}
                     value={user.password}
-                    style={styles.input}
                     secureTextEntry={true}
+                    style={styles.input}
                 />
             </View >
-            <Button title='Login' onPress={loginHandler} />
-            <View style={styles.signIn}>
-                <TouchableOpacity activeOpacity={.5} >
-                    <View style={styles.viewRow}>
-                        <Ionicons name='logo-google' size={20} />
-                        <Text style={{ marginLeft: 10 }}>Sign in with Google</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={.5} >
-                    <View style={styles.viewRow}>
-                        <Ionicons name='logo-facebook' size={20} />
-                        <Text style={{ marginLeft: 10 }}>Sign in with Facebook</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-
+            <Button title='Register' onPress={registerHandler} />
         </View >
     )
 }
@@ -72,15 +69,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    viewRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 5
-    },
-    signIn: {
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     inputContainer: {
         width: '80%',
@@ -108,4 +96,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LoginScreen
+export default RegisterScreen

@@ -7,12 +7,21 @@ import {
 } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const HomeScreen = props => {
+
+    const dispatch = useDispatch()
+
+    const userAccount = useSelector(state => state.user.user)
+
     return (
         <View style={styles.screen}>
             <Text>HomeScreen</Text>
+            <Text>{userAccount.email}</Text>
+            <Text>{userAccount.firstName}</Text>
+            <Text>{userAccount.lastName}</Text>
             <Button
                 title='Go to Report Screen'
                 onPress={() => {
