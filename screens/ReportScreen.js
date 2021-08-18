@@ -6,7 +6,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 const ReportScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text>ReportScreen</Text>
+            <Text>Edited Report Screen</Text>
         </View>
     )
 }
