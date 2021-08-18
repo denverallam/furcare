@@ -1,12 +1,26 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { ADOPTION_LIST } from '../data/dummy'
+import GridTile from '../components/GridTile';
 
 const AdoptionScreen = props => {
+
+    const renderGridItem = itemData => {
+        return <GridTile title={itemData.item.name} />
+    }
+
     return (
+
         <View style={styles.screen}>
             <Text>AdoptionScreen</Text>
+            <FlatList
+                keyExtractor={(item, index) => item.id}
+                data={ADOPTION_LIST}
+                renderItem={renderGridItem}
+                numColumns={2}
+            />
             <Button
                 title='Go to Chat Screen'
                 onPress={() => {
