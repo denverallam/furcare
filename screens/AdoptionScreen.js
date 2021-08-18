@@ -14,6 +14,7 @@ const AdoptionScreen = props => {
     return (
 
         <View style={styles.screen}>
+<<<<<<< HEAD
             <Text>AdoptionScreen</Text>
             <FlatList
                 keyExtractor={(item, index) => item.id}
@@ -21,6 +22,9 @@ const AdoptionScreen = props => {
                 renderItem={renderGridItem}
                 numColumns={2}
             />
+=======
+            <Text>EDITED ADOPTION SCREEN</Text>
+>>>>>>> 587e64189ebe14d695252848a569b34019b748e2
             <Button
                 title='Go to Chat Screen'
                 onPress={() => {
