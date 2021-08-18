@@ -6,7 +6,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 const AdoptionScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text>AdoptionScreen</Text>
+            <Text>EDITED ADOPTION SCREEN</Text>
             <Button
                 title='Go to Chat Screen'
                 onPress={() => {
