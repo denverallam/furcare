@@ -10,7 +10,7 @@ const ChatScreen = props => {
     return (
         <View style={styles.screen}>
                 {
-                    !isHidden && <Text>SHEEEEESH</Text>
+                    !isHidden && <Text>EDITED CHAT SCREEN</Text>
                 }
                 <Button
                     title={isHidden ? 'Show' : 'Hide'}
