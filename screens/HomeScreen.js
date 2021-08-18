@@ -18,7 +18,7 @@ const HomeScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <Text>HomeScreen</Text>
+            <Text>Edited Home Screen</Text>
             <Text>{userAccount.email}</Text>
             <Text>{userAccount.firstName}</Text>
             <Text>{userAccount.lastName}</Text>
