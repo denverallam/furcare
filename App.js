@@ -2,7 +2,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { firebaseConfig } from './config';
-import * as firebase from 'firebase'
+import firebase from 'firebase'
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import store from './store/store';
