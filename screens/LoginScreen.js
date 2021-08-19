@@ -24,8 +24,9 @@ const LoginScreen = () => {
     const dispatch  = useDispatch()
 
     const loginHandler = () => {
-        login(user.email,user.password)
-        dispatch(fetchUser())
+        // login(user.email,user.password)
+        // dispatch(fetchUser())
+        console.log(user)
     }
 
     return (

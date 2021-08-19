@@ -7,17 +7,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchUser } from "../store/actions/user"
 const Container = () => {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(fetchUser())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(fetchUser())
+    // }, [])
 
-    const userAccount = useSelector(state => state.user.user)
+    // const userAccount = useSelector(state => state.user.user)
 
     return (
         <View style={styles.screen}>
-            {userAccount ? <MainNavigator /> : <LoginScreen />}
+            {true ? <MainNavigator /> : <LoginScreen />}
             {/* <LoginScreen /> */}
         </View>
     )

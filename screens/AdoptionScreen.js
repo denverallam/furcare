@@ -8,27 +8,16 @@ import GridTile from '../components/GridTile';
 const AdoptionScreen = props => {
 
     const renderGridItem = itemData => {
-        return <GridTile title={itemData.item.name} />
+        return <GridTile animal={itemData.item} navigation={props.navigation}/>
     }
 
     return (
-
-        <View style={styles.screen}>
-            <Text>AdoptionScreen</Text>
             <FlatList
                 keyExtractor={(item, index) => item.id}
                 data={ADOPTION_LIST}
                 renderItem={renderGridItem}
                 numColumns={2}
             />
-            <Text>EDITED ADOPTION SCREEN</Text>
-            <Button
-                title='Go to Chat Screen'
-                onPress={() => {
-                    props.navigation.navigate('Chat')
-                }}
-            />
-        </View>
     )
 }
 

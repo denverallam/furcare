@@ -12,18 +12,18 @@ export const login = (email, password) => {
         .catch(err => console.log(err))
 }
 
-export const register = (user) => {
-    const { email, password, firstName, lastName } = user
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(result => {
-            firebase.firestore().collection("users")
-                .doc(firebase.auth().currentUser.uid)
-                .set({ email, password, firstName, lastName })
-        })
-        .catch(err => {
-            console.log(err)
-        })
-}
+// export const register = (user) => {
+//     const { email, password, firstName, lastName } = user
+//     firebase.auth().createUserWithEmailAndPassword(email, password)
+//         .then(result => {
+//             firebase.firestore().collection("users")
+//                 .doc(firebase.auth().currentUser.uid)
+//                 .set({ email, password, firstName, lastName })
+//         })
+//         .catch(err => {
+//             console.log(err)
+//         })
+// }
 
 export const googleSignIn = () => {
     var provider = new firebase.auth.GoogleAuthProvider();

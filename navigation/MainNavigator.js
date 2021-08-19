@@ -13,6 +13,7 @@ import colors from '../constants/colors';
 import LogoutScreen from '../screens/LogoutScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import AnimalDetailScreen from '../screens/AnimalDetailScreen';
 
 const defaultStackNavOptions = {
     defaultNavigationOptions: {
@@ -35,27 +36,35 @@ const LoginNavigator = createStackNavigator({
 })
 
 const HomeNavigator = createStackNavigator({
-    Home: { 
-        screen: HomeScreen 
+    Home: {
+        screen: HomeScreen
     },
     Report: {
-        screen: ReportScreen 
+        screen: ReportScreen
     }
 }, defaultStackNavOptions)
 
-
 const ReportNavigator = createStackNavigator({
     Report: {
-        screen: ReportScreen 
+        screen: ReportScreen
     }
 }, defaultStackNavOptions)
 
 const AdoptionNavigator = createStackNavigator({
-    Adopt: { 
-        screen: AdoptionScreen 
+    Adopt: {
+        screen: AdoptionScreen
+    },
+    AnimalDetail: {
+        screen: AnimalDetailScreen,
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: colors.primary
+            },
+            headerTintColor: 'white'
+        }
     },
     Chat: {
-        screen: ChatScreen 
+        screen: ChatScreen
     }
 }, defaultStackNavOptions)
 

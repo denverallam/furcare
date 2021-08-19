@@ -22,7 +22,8 @@ const RegisterScreen = () => {
 
 
     const registerHandler = () => {
-        register(user)
+        // register(user)
+        console.log(user)
     }
 
 
