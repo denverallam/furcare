@@ -19,9 +19,9 @@ const HomeScreen = props => {
     return (
         <View style={styles.screen}>
             <Text>Edited Home Screen</Text>
-            <Text>{userAccount.email}</Text>
+            {/* <Text>{userAccount.email}</Text>
             <Text>{userAccount.firstName}</Text>
-            <Text>{userAccount.lastName}</Text>
+            <Text>{userAccount.lastName}</Text> */}
             <Button
                 title='Go to Report Screen'
                 onPress={() => {

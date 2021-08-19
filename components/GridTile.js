@@ -1,29 +1,34 @@
-import React from 'react'
-import { TouchableOpacity, Image, View, Text, StyleSheet, TouchableNativeFeedback, Platform } from 'react-native'
-import colors from '../constants/colors'
-
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Platform } from 'react-native'
+import colors from '../constants/colors';
 const GridTile = props => {
 
-    let Container = TouchableOpacity
-    if (Platform.OS === 'android' && Platform.Version >= 21) {
-        Container = TouchableNativeFeedback
-    }
+    const { animal } = props
+
 
     return (
-        <View style={styles.gridItem}>
-            <Container
-                activeOpacity={.85}
-                onPress={props.onSelect}
+        <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => props.navigation.navigate('AnimalDetail', {
+                animal: animal
+            })}
+        >
+            <ImageBackground
+                source={{ uri: animal.imageUrl }}
+                style={styles.bgImage}
             >
-                <View style={{ ...styles.container, ...{ backgroundColor: 'white' } }}>
-                    <Text
-                        style={styles.title}
-                        numberOfLines={2}
-                    >{props.name}</Text>
-                </View>
-            </Container>
-        </View>
+                <View>
+                    <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
 
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title} numberOfLines={1}>
+                                {animal.name}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </ImageBackground>
+        </TouchableOpacity >
     )
 }
 
@@ -50,9 +55,17 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: 'open-sans-bold',
         fontSize: 20,
-        color: colors.accent,
+        color: 'white',
         textAlign: 'right'
+    },
+    titleContainer: {
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 5
+    },
+    bgImage: {
+        justifyContent: 'flex-end',
+        height: '100%',
+        width: '100%'
     }
-})
-
+});
 export default GridTile
