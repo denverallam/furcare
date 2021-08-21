@@ -12,8 +12,8 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      {/* <Container /> */}
-      <LoginScreen />
+      <Container />
+      {/* <LoginScreen /> */}
       {/* <RegisterScreen /> */}
     </Provider>
   );

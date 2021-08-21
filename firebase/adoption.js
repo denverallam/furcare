@@ -13,7 +13,7 @@ const pet = {
 }
 
 
-export const addPet = () => {
+export const addPet = (pet) => {
     const id = Math.random().toString(36).substring(7)
     pets.doc(id).set({...pet, id:id})
         .then(
@@ -23,7 +23,6 @@ export const addPet = () => {
             err => console.log(err)
         )
 }
-
 
 export const fetchAllPets = () => {
     return (pets.get()

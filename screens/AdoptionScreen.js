@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
-import HeaderButton from '../components/HeaderButton';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { ADOPTION_LIST } from '../data/dummy'
+import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform } from 'react-native';
 import GridTile from '../components/GridTile';
 import firebase from '../firebase/config';
-import { addPet, fetchAllPets } from '../firebase/adoption';
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-
+import AddPetForm from '../components/AddPetForm';
 
 
 const AdoptionScreen = props => {
@@ -15,37 +11,37 @@ const AdoptionScreen = props => {
     const pets = firebase.firestore().collection("pets")
     const query = pets.orderBy('name').limit(10)
 
-    // const [petList, setPetList] = useState([])
-
+    const [isHidden, setIsHidden] = useState(true)
     const [petList] = useCollectionData(query)
 
-    // const fetchData = () => {
-    //     fetchAllPets()
-    //         .then(
-    //             res => setPetList(res)
-    //         )
-    // }
-
-    // useEffect(() => {
-    //     fetchData()
-    // }, [])
 
     const renderGridItem = itemData => {
         return <GridTile animal={itemData.item} navigation={props.navigation} />
     }
 
+
+    const hideForm = () => {
+        setIsHidden(!isHidden)
+    }
+
     return (
-        <View style={styles.container}>
+        <View style={styles.screen}>
             <Button
                 title='Add Pet'
-                onPress={() => addPet()}
+                // onPress={() => addPet()}
+                onPress={() => setIsHidden(!isHidden)}
             />
-            <FlatList
-                keyExtractor={(item, index) => item.id}
-                data={petList}
-                renderItem={renderGridItem}
-                numColumns={2}
-            />
+            {
+                isHidden
+                    ? <FlatList
+                        keyExtractor={(item, index) => item.id}
+                        data={petList}
+                        renderItem={renderGridItem}
+                        numColumns={2}
+                    />
+                    : <AddPetForm hideForm={setIsHidden} hide={isHidden}/>
+            }
+
         </View>
 
     )
@@ -70,12 +66,29 @@ const AdoptionScreen = props => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'center'
     },
     container: {
-        flex: 1
-    }
+        flex: 1,
+        alignItems: 'center',
+        width: '100%'
+    },
+    image: {
+        width: '100%',
+        height: 200,
+        borderRadius: 20
+    },
+    inputContainer: {
+        width: '80%'
+    },
+    text: {
+        fontSize: 12,
+        marginBottom: 10
+    },
+    input: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'black'
+    },
 })
 
 export default AdoptionScreen
