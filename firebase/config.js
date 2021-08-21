@@ -1,5 +1,6 @@
+import * as firebase from 'firebase'
 
-export const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyC_reDtHXecDQWPoa91ffmiAkU8737iLYE",
   authDomain: "furcare-30a9a.firebaseapp.com",
   databaseURL: "https://furcare-30a9a-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -10,3 +11,8 @@ export const firebaseConfig = {
 };
 
 
+
+firebase.initializeApp(firebaseConfig)
+
+
+export default firebase

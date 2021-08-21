@@ -1,12 +1,20 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { fetchAnimals } from '../firebase/adoption';
 
 const ReportScreen = props => {
     return (
         <View style={styles.screen}>
             <Text>Edited Report Screen</Text>
+            <Button
+                title='Go to Report Screen'
+                onPress={() => {
+                    props.navigation.navigate('Report')
+                    // fetchAnimals()
+                }}
+            />
         </View>
     )
 }

@@ -39,7 +39,6 @@ AnimalDetailScreen.navigationOptions = navigationData => {
     }
 }
 
-
 const styles = StyleSheet.create({
     textContainer: {
         padding: 10,

@@ -1,17 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Platform } from 'react-native'
 import colors from '../constants/colors';
+import { deleteAnimal, removePet, updateAnimal } from '../firebase/adoption';
 const GridTile = props => {
 
     const { animal } = props
 
-
     return (
         <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => props.navigation.navigate('AnimalDetail', {
-                animal: animal
-            })}
+            onPress={() => removePet(animal.id)}
         >
             <ImageBackground
                 source={{ uri: animal.imageUrl }}
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
         padding: 15
     },
     title: {
-        fontFamily: 'open-sans-bold',
+
         fontSize: 20,
         color: 'white',
         textAlign: 'right'

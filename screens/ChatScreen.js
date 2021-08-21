@@ -53,31 +53,32 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { StyleSheet, TextInput, View, YellowBox, Button } from 'react-native'
+import { StyleSheet, TextInput, View, YellowBox, Button, LogBox } from 'react-native'
 import firebase from 'firebase'
 import 'firebase/firestore'
+import { firebaseConfig } from '../config'
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: "AIzaSyAoIXf74AciHfSsq4TWjowxREnTYZUelTA",
-    authDomain: "furcare-1a57d.firebaseapp.com",
-    projectId: "furcare-1a57d",
-    storageBucket: "furcare-1a57d.appspot.com",
-    messagingSenderId: "135905143301",
-    appId: "1:135905143301:web:5aaa48a67257851e324a6c",
-    measurementId: "G-71XF0HGXD9"
-  };
+// const firebaseConfig = {
+//     apiKey: "AIzaSyAoIXf74AciHfSsq4TWjowxREnTYZUelTA",
+//     authDomain: "furcare-1a57d.firebaseapp.com",
+//     projectId: "furcare-1a57d",
+//     storageBucket: "furcare-1a57d.appspot.com",
+//     messagingSenderId: "135905143301",
+//     appId: "1:135905143301:web:5aaa48a67257851e324a6c",
+//     measurementId: "G-71XF0HGXD9"
+//   };
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig)
 }
 
-YellowBox.ignoreWarnings(['Setting a timer for a long period of time'])
+LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 
 const db = firebase.firestore()
 const chatsRef = db.collection('chats')
 
-export default function ChatScreen() {
+const ChatScreen = (props) => {
     const [user, setUser] = useState(null)
     const [name, setName] = useState('')
     const [messages, setMessages] = useState([])
@@ -152,3 +153,5 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
     },
 })
+
+export default ChatScreen

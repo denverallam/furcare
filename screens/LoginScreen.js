@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import { login } from '../firebase';
-import { fetchUser } from '../store/actions/user';
+import firebase from '../firebase/config';
+
+
 
 const LoginScreen = () => {
 
@@ -21,13 +22,17 @@ const LoginScreen = () => {
         password: ''
     })
 
-    const dispatch  = useDispatch()
+    // const auth = firebase.auth()
+    // const firestore = firebase.firestore()
 
-    const loginHandler = () => {
-        // login(user.email,user.password)
-        // dispatch(fetchUser())
-        console.log(user)
+    // const userAcc = useAuthState(auth)
+
+    const onFacebookButtonPress = () => {
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithRedirect(provider)
     }
+
+
 
     return (
         <View style={styles.container}>
@@ -48,7 +53,7 @@ const LoginScreen = () => {
                     secureTextEntry={true}
                 />
             </View >
-            <Button title='Login' onPress={loginHandler} />
+            <Button title='Login' />
             <View style={styles.signIn}>
                 <TouchableOpacity activeOpacity={.5} >
                     <View style={styles.viewRow}>
@@ -56,14 +61,13 @@ const LoginScreen = () => {
                         <Text style={{ marginLeft: 10 }}>Sign in with Google</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={.5} >
+                <TouchableOpacity activeOpacity={.5} onPress={() => onFacebookButtonPress()} >
                     <View style={styles.viewRow}>
                         <Ionicons name='logo-facebook' size={20} />
                         <Text style={{ marginLeft: 10 }}>Sign in with Facebook</Text>
                     </View>
                 </TouchableOpacity>
             </View>
-
         </View >
     )
 }

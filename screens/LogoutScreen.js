@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { logout } from '../store/actions/user';
+import { addPet, fetchAllPets, removePet } from '../firebase/adoption';
 
 
 const LogoutScreen = props => {
 
-    const dispatch = useDispatch()
-
-    const logoutHandler = () => {
-        dispatch(logout())
-    }
-
     return (
         <View style={styles.screen}>
-                <Button
-                    title='Logout'
-                    onPress={logoutHandler}
-                />
+            <Button
+                title='Logout'
+            />
         </View>
     )
 }
@@ -29,5 +22,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 })
+
 
 export default LogoutScreen

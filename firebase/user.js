@@ -1,5 +1,10 @@
 import firebase from "firebase";
 import "firebase/auth";
+import { firebaseConfig } from "../config";
+
+if(firebase.apps.length === 0){
+    firebase.initializeApp(firebaseConfigs)
+  }
 
 // const db = firebase.firestore().collection("users")
 

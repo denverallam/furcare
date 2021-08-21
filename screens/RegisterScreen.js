@@ -8,8 +8,8 @@ import {
     Alert
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../firebase';
-import { fetchUser } from '../store/actions/user';
+// import { register } from '../firebase';
+// import { fetchUser } from '../store/actions/user';
 
 const RegisterScreen = () => {
 
