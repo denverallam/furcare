@@ -12,16 +12,26 @@ const pet = {
     age: '2'
 }
 
-
 export const addPet = (pet) => {
     const id = Math.random().toString(36).substring(7)
     pets.doc(id).set({...pet, id:id})
         .then(
-            doc => console.log(doc)
+            doc => console.log('Added')
         )
         .catch(
-            err => console.log(err)
+            err => console.log('Failed to Add')
         )
+}
+
+export const updatePet = (id, newPet) => {
+    pets.doc(id).update(newPet)
+    .then(
+        console.log('Updated')
+    )
+    .catch(
+        console.log('Failed to Update')
+    )
+
 }
 
 export const fetchAllPets = () => {
@@ -42,7 +52,7 @@ export const fetchAllPets = () => {
 export const removePet = (id) => {
     pets.doc(id).delete()
     .then(
-        console.log('deleted')
+        console.log('Deleted')
     )
     .catch(
         err => console.log(err)

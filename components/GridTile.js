@@ -1,15 +1,20 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Platform } from 'react-native'
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Button, ImageBackground, Platform } from 'react-native'
 import colors from '../constants/colors';
 import { deleteAnimal, removePet, updateAnimal } from '../firebase/adoption';
+
 const GridTile = props => {
 
-    const { animal } = props
+    const { animal, isHidden } = props
 
     return (
         <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => removePet(animal.id)}
+            onPress={() => {
+                // removePet(animal.id)
+                props.setPetDetail(animal)
+                props.setIsHidden(!isHidden)
+            }}
         >
             <ImageBackground
                 source={{ uri: animal.imageUrl }}
@@ -17,16 +22,19 @@ const GridTile = props => {
             >
                 <View>
                     <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
-
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title} numberOfLines={1}>
-                                {animal.name}
-                            </Text>
+                            <TouchableOpacity onPress={()=> removePet(animal.id)}>
+                                <Text style={styles.title} numberOfLines={1}>
+                                    {animal.name}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
             </ImageBackground>
         </TouchableOpacity >
+
+
     )
 }
 
@@ -51,7 +59,6 @@ const styles = StyleSheet.create({
         padding: 15
     },
     title: {
-
         fontSize: 20,
         color: 'white',
         textAlign: 'right'

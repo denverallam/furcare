@@ -8,17 +8,16 @@ import AddPetForm from '../components/AddPetForm';
 
 const AdoptionScreen = props => {
 
-    const pets = firebase.firestore().collection("pets")
-    const query = pets.orderBy('name').limit(10)
+    const pet = firebase.firestore().collection('pets')
+    const petQuery = pet.orderBy('name').limit(30)
+    const [petDetail, setPetDetail] = useState({})
 
+    const [petList] = useCollectionData(petQuery)
     const [isHidden, setIsHidden] = useState(true)
-    const [petList] = useCollectionData(query)
-
 
     const renderGridItem = itemData => {
-        return <GridTile animal={itemData.item} navigation={props.navigation} />
+        return <GridTile animal={itemData.item} navigation={props.navigation} setIsHidden={setIsHidden} isHidden={isHidden} setPetDetail={setPetDetail} />
     }
-
 
     const hideForm = () => {
         setIsHidden(!isHidden)
@@ -27,9 +26,12 @@ const AdoptionScreen = props => {
     return (
         <View style={styles.screen}>
             <Button
-                title='Add Pet'
+                title={isHidden ? 'Add Pet' : 'Hide Form'}
                 // onPress={() => addPet()}
-                onPress={() => setIsHidden(!isHidden)}
+                onPress={() => {
+                    setIsHidden(!isHidden)
+                    setPetDetail({})
+                }}
             />
             {
                 isHidden
@@ -39,9 +41,8 @@ const AdoptionScreen = props => {
                         renderItem={renderGridItem}
                         numColumns={2}
                     />
-                    : <AddPetForm hideForm={setIsHidden} hide={isHidden}/>
+                    : <AddPetForm hideForm={setIsHidden} hide={isHidden} petInfo={petDetail} />
             }
-
         </View>
 
     )

@@ -29,7 +29,7 @@ const LoginScreen = () => {
 
     const onFacebookButtonPress = () => {
         var provider = new firebase.auth.FacebookAuthProvider();
-        firebase.auth().signInWithRedirect(provider)
+firebase.auth().signInWithRedirect(provider)
     }
 
 

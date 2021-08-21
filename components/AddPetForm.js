@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform } from 'react-native';
-import { addPet, fetchAllPets } from '../firebase/adoption';
+import { addPet, fetchAllPets, updatePet } from '../firebase/adoption';
+import firebase from '../firebase/config';
+import { useDocument } from 'react-firebase-hooks/firestore'
 import * as ImagePicker from 'expo-image-picker';
 
 const AddPetForm = (props) => {
 
+    const { petInfo } = props
     const [petDetails, setPetDetails] = useState({
         name: '',
         imageUrl: '',
@@ -14,6 +17,12 @@ const AddPetForm = (props) => {
         sex: '',
         age: ''
     })
+
+    useEffect(() => {
+        if (petInfo.id) {
+            setPetDetails(petInfo)
+        }
+    }, [petInfo])
 
     useEffect(() => {
         (async () => {
@@ -34,12 +43,9 @@ const AddPetForm = (props) => {
             quality: 1,
         });
 
-        console.log(props.hideForm());
-
         if (!result.cancelled) {
             setPetDetails({ ...petDetails, imageUrl: result.uri });
         }
-        console.log(petDetails.imageUrl)
     };
 
     return (
@@ -89,11 +95,22 @@ const AddPetForm = (props) => {
                     style={styles.input}
                 />
                 <Button title='Select Image' onPress={() => pickImage()} />
-                <Button title='Submit' onPress={() => {
-                    addPet(petDetails)
-                    props.hideForm(!props.hide)
+                {
+                    petDetails.id
+                        ?
+                        <Button title='Update' onPress={() => {
+                            updatePet(petDetails.id, petDetails)
+                            props.hideForm(!props.hide)
+                        }
+                        } />
+                        :
+                        <Button title='Submit' onPress={() => {
+                            addPet(petDetails)
+                            props.hideForm(!props.hide)
+                        }
+                        } />
                 }
-                } />
+
             </View >
         </View>
     )
