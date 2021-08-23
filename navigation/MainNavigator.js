@@ -14,6 +14,7 @@ import LogoutScreen from '../screens/LogoutScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AnimalDetailScreen from '../screens/AnimalDetailScreen';
+import DonationScreen from '../screens/DonationScreen';
 
 const defaultStackNavOptions = {
     defaultNavigationOptions: {
@@ -47,6 +48,12 @@ const HomeNavigator = createStackNavigator({
 const ReportNavigator = createStackNavigator({
     Report: {
         screen: ReportScreen
+    }
+}, defaultStackNavOptions)
+
+const DonationNavigator = createStackNavigator({
+    Donate: {
+        screen: DonationScreen
     }
 }, defaultStackNavOptions)
 
@@ -98,7 +105,7 @@ const MainNavigator = createMaterialBottomTabNavigator(
                 tabBarIcon: (tabInfo) => {
                     return <Ionicons name='megaphone' size={25} color={colors.accent} />
                 },
-                tabBarColor: 'white'
+                tabBarColor: 'transparent'
             }
         },
         Adopt: {
@@ -122,12 +129,12 @@ const MainNavigator = createMaterialBottomTabNavigator(
                 tabBarColor: 'white'
             }
         },
-        User: {
-            screen: UserNavigator,
+        Donate: {
+            screen: DonationNavigator,
             navigationOptions: {
                 tabBarLabel: <Text style={styles.text}>User</Text>,
                 tabBarIcon: (tabInfo) => {
-                    return <Ionicons name='person' size={25} color={colors.accent} />
+                    return <Ionicons name='gift' size={25} color={colors.accent} />
                 },
 
                 tabBarColor: 'white'
