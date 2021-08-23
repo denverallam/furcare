@@ -46,18 +46,18 @@
 //     }
 // })
 
-// export default ChatScreen
-
 // @refresh reset
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StyleSheet, TextInput, View, YellowBox, Button, LogBox } from 'react-native'
+import 'firebase/firestore'
 import firebase from '../firebase/config'
 
-
-
+if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig)
+}
 
 LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 
