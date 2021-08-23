@@ -11,7 +11,7 @@ const donationDetails = {
 
 export const addDonation = () => {
     const id = Math.random().toString(36).substring(7)
-    donations.doc(id).set({...donationDetails, id:id})
+    donations.doc(id).set({ ...donationDetails, id: id })
         .then(
             doc => console.log('Added')
         )
@@ -20,14 +20,14 @@ export const addDonation = () => {
         )
 }
 
-export const updatePet = (id, newDonation) => {
+export const updateDonation = (id, newDonation) => {
     donations.doc(id).update(newDonation)
-    .then(
-        console.log('Updated')
-    )
-    .catch(
-        console.log('Failed to Update')
-    )
+        .then(
+            console.log('Updated')
+        )
+        .catch(
+            console.log('Failed to Update')
+        )
 }
 
 export const fetchAllDonations = () => {
@@ -47,10 +47,10 @@ export const fetchAllDonations = () => {
 
 export const removeDonation = (id) => {
     donations.doc(id).delete()
-    .then(
-        console.log('Deleted')
-    )
-    .catch(
-        err => console.log(err)
-    )
+        .then(
+            console.log('Deleted')
+        )
+        .catch(
+            err => console.log(err)
+        )
 }

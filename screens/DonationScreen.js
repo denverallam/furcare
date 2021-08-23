@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform } from 'react-native';
-import GridTile from '../components/GridTile';
+import DonationTile from '../components/DonationTile';
 import firebase from '../firebase/config';
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import AddPetForm from '../components/AddPetForm';
 import AddDonationForm from '../components/AddDonationForm';
 
 
@@ -12,14 +11,12 @@ const DonationScreen = props => {
     const donations = firebase.firestore().collection('donations')
     const donationQuery = donations.orderBy('name').limit(30)
     const [donationDetails, setDonationDetails] = useState({})
-
     const [donationList] = useCollectionData(donationQuery)
     const [isHidden, setIsHidden] = useState(true)
 
     const renderGridItem = itemData => {
-        return <GridTile donation={itemData.item} navigation={props.navigation} setIsHidden={setIsHidden} isHidden={isHidden} setDonationDetails={setDonationDetails} />
+        return <DonationTile donation={itemData.item} navigation={props.navigation} setIsHidden={setIsHidden} isHidden={isHidden} setDonationDetails={setDonationDetails} />
     }
-
     const hideForm = () => {
         setIsHidden(!isHidden)
     }

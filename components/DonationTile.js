@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Button, ImageBackground, Platform } from 'react-native'
 import colors from '../constants/colors';
 import { deleteAnimal, removePet, updateAnimal } from '../firebase/adoption';
+import { removeDonation } from '../firebase/donation';
 
 const DonationTile = props => {
 
@@ -16,21 +17,14 @@ const DonationTile = props => {
                 props.setIsHidden(!isHidden)
             }}
         >
-            <View style={styles.titleContainer}>
-                <TouchableOpacity onPress={() => removePet(donation.id)}>
-                    <Text style={styles.title} numberOfLines={1}>
-                        {donation.amount}
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            {/* <ImageBackground
+            <ImageBackground
                 source={{ uri: donation.imageUrl }}
                 style={styles.bgImage}
             >
                 <View>
                     <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
                         <View style={styles.titleContainer}>
-                            <TouchableOpacity onPress={()=> removePet(animal.id)}>
+                            <TouchableOpacity onPress={()=> removeDonation(donation.id)}>
                                 <Text style={styles.title} numberOfLines={1}>
                                     {donation.amount}
                                 </Text>
@@ -38,7 +32,7 @@ const DonationTile = props => {
                         </View>
                     </View>
                 </View>
-            </ImageBackground> */}
+            </ImageBackground>
         </TouchableOpacity >
 
 
