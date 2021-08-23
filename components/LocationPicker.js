@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 
 const LocationPicker = props => {
 
@@ -33,7 +33,7 @@ const LocationPicker = props => {
     var latitude = 37.78825;
     var longitude = -122.4324
 
-    if(location){
+    if (location) {
         latitude = location.coords.latitude
         longitude = location.coords.longitude
     }
@@ -48,7 +48,11 @@ const LocationPicker = props => {
                     latitudeDelta: 0.015,
                     longitudeDelta: 0.0121
                 }}
-            />
+            >
+                {
+                    location && <Marker coordinate={location.coords} />
+                }
+            </MapView>
             <Button title="Get User Location" onPress={getLocationHandler} />
 
         </View>
