@@ -47,7 +47,7 @@ const AddDonationForm = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
-            <Text style={styles.text}>Name</Text>
+                <Text style={styles.text}>Name</Text>
                 <TextInput
                     placeholder="Name"
                     onChangeText={name => setDonationDetails({ ...donationDetails, name: name })}
