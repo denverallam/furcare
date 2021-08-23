@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
+import MapView from 'react-native-maps'
 
 const LocationPicker = props => {
 
@@ -10,7 +11,6 @@ const LocationPicker = props => {
     const getLocationHandler = async () => {
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
-        console.log(location)
     }
 
     useEffect(() => {
@@ -30,25 +30,38 @@ const LocationPicker = props => {
         text = JSON.stringify(location);
     }
 
+    var latitude = 37.78825;
+    var longitude = -122.4324
+
+    if(location){
+        latitude = location.coords.latitude
+        longitude = location.coords.longitude
+    }
+
     return (
         <View style={styles.locationPicker}>
-            <View style={styles.mapPreview}>
-                <Text>No Location Yet</Text>
-            </View>
+            <MapView
+                style={styles.map}
+                region={{
+                    latitude: latitude,
+                    longitude: longitude,
+                    latitudeDelta: 0.015,
+                    longitudeDelta: 0.0121
+                }}
+            />
             <Button title="Get User Location" onPress={getLocationHandler} />
+
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     locationPicker: {
-        marginBottom: 15
+        flex: 1,
+        width: '100%'
     },
-    marginPrivew: {
-        marginBottom: 10,
-        width: '100%',
-        height: 150,
-        borderWidth: 1
+    map: {
+        flex: 1
     }
 })
 
