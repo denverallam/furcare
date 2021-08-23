@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform } from 'react-native';
-import firebase from '../firebase/config';
-import { useDocument } from 'react-firebase-hooks/firestore'
 import * as ImagePicker from 'expo-image-picker';
 import { addDonation, updateDonation } from '../firebase/donation';
 
