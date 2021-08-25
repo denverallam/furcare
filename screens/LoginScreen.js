@@ -8,30 +8,25 @@ import {
     TouchableOpacity,
     Alert
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import firebase from '../firebase/config'
 import { Ionicons } from '@expo/vector-icons';
-import firebase from '../firebase/config';
-
 
 
 const LoginScreen = () => {
 
-    const [user, setUser] = useState({
-        name: '',
-        email: '',
-        password: ''
-    })
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(firebase.auth());
 
-    // const auth = firebase.auth()
-    // const firestore = firebase.firestore()
-
-    // const userAcc = useAuthState(auth)
-
-    const onFacebookButtonPress = () => {
-        var provider = new firebase.auth.FacebookAuthProvider();
-firebase.auth().signInWithRedirect(provider)
-    }
-
+    console.log('User: ', user)
+    console.log('Loading: ', loading)
+    console.log('Error:', error)
 
 
     return (
@@ -40,20 +35,20 @@ firebase.auth().signInWithRedirect(provider)
                 <Text style={styles.text}>Email</Text>
                 <TextInput
                     placeholder="Email"
-                    onChangeText={email => setUser({ ...user, email: email })}
-                    value={user.email}
+                    onChangeText={email => setEmail(email)}
+                    value={email}
                     style={styles.input}
                 />
                 <Text style={styles.text}>Password</Text>
                 <TextInput
                     placeholder="Password"
-                    onChangeText={password => setUser({ ...user, password: password })}
-                    value={user.password}
+                    onChangeText={password => setPassword(password)}
+                    value={password}
                     style={styles.input}
                     secureTextEntry={true}
                 />
             </View >
-            <Button title='Login' />
+            <Button title='Login' onPress={() => signInWithEmailAndPassword(email, password)} />
             <View style={styles.signIn}>
                 <TouchableOpacity activeOpacity={.5} >
                     <View style={styles.viewRow}>
@@ -61,7 +56,7 @@ firebase.auth().signInWithRedirect(provider)
                         <Text style={{ marginLeft: 10 }}>Sign in with Google</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={.5} onPress={() => onFacebookButtonPress()} >
+                <TouchableOpacity activeOpacity={.5}>
                     <View style={styles.viewRow}>
                         <Ionicons name='logo-facebook' size={20} />
                         <Text style={{ marginLeft: 10 }}>Sign in with Facebook</Text>

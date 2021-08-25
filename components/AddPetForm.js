@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Platform, TouchableOpacity } from 'react-native';
 import { addPet, fetchAllPets, updatePet } from '../firebase/adoption';
 import firebase from '../firebase/config';
 import { useDocument } from 'react-firebase-hooks/firestore'
@@ -94,7 +94,9 @@ const AddPetForm = (props) => {
                     value={petDetails.status}
                     style={styles.input}
                 />
-                <Button title='Select Image' onPress={() => pickImage()} />
+                <TouchableOpacity style={styles.buttonContainer} onPress={() => pickImage()} >
+                    <Text>Select Image</Text>
+                </TouchableOpacity>
                 {
                     petDetails.id
                         ?
@@ -132,7 +134,9 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     inputContainer: {
-        width: '80%'
+        width: '80%',
+        flex: 1,
+        justifyContent: 'center'
     },
     text: {
         fontSize: 12,
@@ -142,6 +146,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'black'
     },
+    buttonContainer: {
+        marginVertical: 15,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 })
 
 export default AddPetForm
