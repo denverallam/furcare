@@ -16,8 +16,10 @@
     "expo-app-loading": "^1.1.2",
     "expo-google-app-auth": "^8.2.2",
     "expo-google-sign-in": "~9.2.1",
+    "expo-image-picker": "~10.2.2",
     "expo-status-bar": "~1.0.4",
     "firebase": "^8.9.1",
+    "native-base": "^3.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-firebase-hooks": "^3.0.4",
@@ -42,7 +44,8 @@
     "react-redux": "^7.2.4",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
-    "expo-image-picker": "~10.2.2"
+    "styled-components": "^5.3.0",
+    "styled-system": "^5.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
