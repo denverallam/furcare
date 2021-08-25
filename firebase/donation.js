@@ -9,7 +9,7 @@ const donationDetails = {
     name: 'Cash'
 }
 
-export const addDonation = () => {
+export const addDonation = (donationDetails) => {
     const id = Math.random().toString(36).substring(7)
     donations.doc(id).set({ ...donationDetails, id: id })
         .then(

@@ -1,91 +1,57 @@
-import firebase from "firebase";
-import "firebase/auth";
-import { firebaseConfig } from "../config";
+import firebase from './config'
 
-if(firebase.apps.length === 0){
-    firebase.initializeApp(firebaseConfigs)
-  }
+const users = firebase.firestore().collection("users")
 
-// const db = firebase.firestore().collection("users")
-
-
-export const login = (email, password) => {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(result => {
-            console.log(result.user)
-        })
-        .catch(err => console.log(err))
+const userDetails = {
+    firstName: '500',
+    lastName: 'https://scontent.fmnl4-6.fna.fbcdn.net/v/t1.6435-9/96086444_3074405019284321_4089069952558956544_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeEUiS-K3uuKA2rd1s985VvgagRxe8gwwf9qBHF7yDDB_2XeNvmB39p5I_SqSqbMUTG_VSuFN6M4MFY1tGJKnaeF&_nc_ohc=bkus9vQUDBcAX_ZN8hp&_nc_ht=scontent.fmnl4-6.fna&oh=698abda6882fe0da57aa61fcd02ad5e1&oe=6144C140',
+    email: 'In-Kind',
+    password: 'Cash',
+    contactNumber: 'Cash',
 }
 
-// export const register = (user) => {
-//     const { email, password, firstName, lastName } = user
-//     firebase.auth().createUserWithEmailAndPassword(email, password)
-//         .then(result => {
-//             firebase.firestore().collection("users")
-//                 .doc(firebase.auth().currentUser.uid)
-//                 .set({ email, password, firstName, lastName })
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }
-
-export const googleSignIn = () => {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-            /** @type {firebase.auth.OAuthCredential} */
-            var credential = result.credential;
-
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-
-            console.log(result)
-            // ...
-        }).catch((error) => {
-            // Handle Errors here.
-            console.log(error)
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-        });
+export const addUser = (id, userDetails) => {
+    
+    users.doc(id).set({ ...userDetails, id: id })
+        .then(
+            doc => console.log('Added')
+        )
+        .catch(
+            err => console.log('Failed to Add')
+        )
 }
 
-export const facebookSignIn = () => {
-    var provider = new firebase.auth.FacebookAuthProvider();
+export const updateUser = (id, newUser) => {
+    users.doc(id).update(newUser)
+        .then(
+            console.log('Updated')
+        )
+        .catch(
+            console.log('Failed to Update')
+        )
+}
 
-    firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-            console.log(result)
-            /** @type {firebase.auth.OAuthCredential} */
-            var credential = result.credential;
-
-            // The signed-in user info.
-            var user = result.user;
-
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            var accessToken = credential.accessToken;
-
-            // ...
+export const fetchAllUsers = () => {
+    return (users.get()
+        .then(snapshot => {
+            let userList = []
+            snapshot.forEach(doc => {
+                userList.push(doc.data())
+            })
+            return userList
         })
-        .catch((error) => {
-            console.log(error)
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-        });
+        .catch(
+            err => console.log(err)
+        )
+    )
+}
+
+export const removeUser = (id) => {
+    users.doc(id).delete()
+        .then(
+            console.log('Deleted')
+        )
+        .catch(
+            err => console.log(err)
+        )
 }
