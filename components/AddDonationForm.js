@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform, CheckBox, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { addDonation, updateDonation } from '../firebase/donation';
 
@@ -11,6 +11,7 @@ const AddDonationForm = (props) => {
         imageUrl: '',
         type: '',
         amount: '',
+        quantity: '',
         isVerified: false
     })
 
@@ -46,6 +47,7 @@ const AddDonationForm = (props) => {
 
     return (
         <View style={styles.container}>
+            {/* <Checkbox onValueChange={()=> console.log('hatdog')} /> */}
             <View style={styles.inputContainer}>
                 <Text style={styles.text}>Name</Text>
                 <TextInput
@@ -69,21 +71,26 @@ const AddDonationForm = (props) => {
                     style={styles.input}
                 // secureTextEntry={true}
                 />
-                <Button title='Select Image' onPress={() => pickImage()} />
+                <TouchableOpacity style={styles.buttonContainer} onPress={() => pickImage()} >
+                    <Text>Select Image</Text>
+                </TouchableOpacity>
                 {
                     donationDetails.id
                         ?
+
                         <Button title='Update' onPress={() => {
                             updateDonation(donationDetails.id, donationDetails)
                             props.hideForm(!props.hide)
                         }
                         } />
                         :
+
                         <Button title='Submit' onPress={() => {
                             addDonation(donationDetails)
                             props.hideForm(!props.hide)
                         }
                         } />
+
                 }
 
             </View >
@@ -107,7 +114,9 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     inputContainer: {
-        width: '80%'
+        width: '80%',
+        flex: 1,
+        justifyContent: 'center'
     },
     text: {
         fontSize: 12,
@@ -117,6 +126,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'black'
     },
+    buttonContainer: {
+        marginVertical: 15,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 })
 
 export default AddDonationForm

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Image, TextInput, Platform } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Platform, TouchableOpacity } from 'react-native';
 import { addPet, fetchAllPets, updatePet } from '../firebase/adoption';
 import firebase from '../firebase/config';
 import { useDocument } from 'react-firebase-hooks/firestore'
 import * as ImagePicker from 'expo-image-picker';
+import { color } from 'react-native-reanimated';
+
+
+
 
 const AddPetForm = (props) => {
 
@@ -52,14 +56,14 @@ const AddPetForm = (props) => {
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <Text style={styles.text}>Name</Text>
-                <TextInput
+                <TextInput style={styles.textInput}
                     placeholder="Name"
                     onChangeText={name => setPetDetails({ ...petDetails, name: name })}
                     value={petDetails.name}
                     style={styles.input}
                 />
                 <Text style={styles.text}>Age</Text>
-                <TextInput
+                <TextInput style={styles.textInput}
                     placeholder="Age"
                     onChangeText={age => setPetDetails({ ...petDetails, age: age })}
                     value={petDetails.age}
@@ -67,7 +71,7 @@ const AddPetForm = (props) => {
                 // secureTextEntry={true}
                 />
                 <Text style={styles.text}>Breed</Text>
-                <TextInput
+                <TextInput style={styles.textInput}
                     placeholder="Breed"
                     onChangeText={breed => setPetDetails({ ...petDetails, breed: breed })}
                     value={petDetails.breed}
@@ -81,20 +85,22 @@ const AddPetForm = (props) => {
                     style={styles.input}
                 />
                 <Text style={styles.text}>Size</Text>
-                <TextInput
+                <TextInput style={styles.textInput}
                     placeholder="Size"
                     onChangeText={size => setPetDetails({ ...petDetails, size: size })}
                     value={petDetails.size}
                     style={styles.input}
                 />
                 <Text style={styles.text}>Status</Text>
-                <TextInput
+                <TextInput style={styles.textInput}
                     placeholder="Size"
                     onChangeText={status => setPetDetails({ ...petDetails, status: status })}
                     value={petDetails.status}
                     style={styles.input}
                 />
-                <Button title='Select Image' onPress={() => pickImage()} />
+                <TouchableOpacity style={styles.buttonContainer} onPress={() => pickImage()} >
+                    <Text>Select Image</Text>
+                </TouchableOpacity>
                 {
                     petDetails.id
                         ?
@@ -119,7 +125,8 @@ const AddPetForm = (props) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+
     },
     container: {
         flex: 1,
@@ -132,7 +139,9 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     inputContainer: {
-        width: '80%'
+        width: '80%',
+        flex: 1,
+        justifyContent: 'center'
     },
     text: {
         fontSize: 12,
@@ -142,6 +151,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'black'
     },
+    buttonContainer: {
+        marginVertical: 15,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textInput: {
+        borderRadius: 10,
+        borderColor: '#EE9F1A'
+    },
+
 })
 
 export default AddPetForm
