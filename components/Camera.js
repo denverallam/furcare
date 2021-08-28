@@ -31,7 +31,7 @@ const CameraScreen = (props) => {
             const data = await cameraRef.current.takePictureAsync(options);
             const source = data.base64;
             setImage(source)
-
+            console.log(image)
             if (source) {
                 await cameraRef.current.pausePreview();
                 setIsPreview(true);
