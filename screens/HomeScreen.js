@@ -5,18 +5,12 @@ import {
     StyleSheet,
     Button
 } from 'react-native';
-import HeaderButton from '../components/HeaderButton';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useDispatch, useSelector } from 'react-redux';
-import { addAnimal } from '../firebase/adoption';
+// import HeaderButton from '../components/HeaderButton';
+// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import firebase from '../firebase/config'
 
 
 const HomeScreen = props => {
-
-    const dispatch = useDispatch()
-
-    const userAccount = useSelector(state => state.user.user)
-
 
     const animal = {
         id: 'c7',
@@ -36,8 +30,10 @@ const HomeScreen = props => {
             <Text>{userAccount.firstName}</Text>
             <Text>{userAccount.lastName}</Text> */}
             <Button
-                title='Go to Report Screen'
+                title='Logout'
                 onPress={() => {
+                    firebase.auth().signOut()
+                    // sendEmail()
                     // props.navigation.navigate('Report')
                     // addAnimal(animal)
                 }}

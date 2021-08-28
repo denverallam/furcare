@@ -69,7 +69,11 @@ const AddDonationForm = (props) => {
                     onChangeText={amount => setDonationDetails({ ...donationDetails, amount: amount })}
                     value={donationDetails.amount}
                     style={styles.input}
-                // secureTextEntry={true}
+                    blurOnSubmit
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    keyboardType="number-pad"
+                    maxLength={10}
                 />
                 <TouchableOpacity style={styles.buttonContainer} onPress={() => pickImage()} >
                     <Text>Select Image</Text>

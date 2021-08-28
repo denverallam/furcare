@@ -4,14 +4,10 @@ import {
     Text,
     View,
     TextInput,
-    Button,
-    Alert
+    Button
 } from 'react-native';
+import {register} from '../firebase/user'
 import firebase from '../firebase/config'
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { addUser } from '../firebase/user';
-// import { register } from '../firebase';
-// import { fetchUser } from '../store/actions/user';
 
 const RegisterScreen = () => {
 
@@ -21,17 +17,6 @@ const RegisterScreen = () => {
         email: '',
         password: ''
     })
-
-    const [
-        createUserWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useCreateUserWithEmailAndPassword(firebase.auth());
-
-    if (user) {
-        console.log(user.user.uid)
-    }
 
     return (
         <View style={styles.container}>
@@ -67,7 +52,7 @@ const RegisterScreen = () => {
                 />
             </View >
             <Button title='Register' onPress={() => {
-                addUser(user.user.uid, userInfo);
+                register(userInfo)
             }} />
         </View >
     )

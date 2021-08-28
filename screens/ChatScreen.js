@@ -1,239 +1,13 @@
-// import React, { useState } from 'react';
-// import { View, Text, StyleSheet, Button } from 'react-native';
-// import HeaderButton from '../components/HeaderButton';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-
-// const ChatScreen = props => {
-
-//     const [isHidden, setIsHidden] = useState(true)
-
-//     return (
-//         <View style={styles.screen}>
-//                 {
-//                     !isHidden && <Text>SHEEEEESH</Text>
-//                 }
-//                 <Button
-//                     title={isHidden ? 'Show' : 'Hide'}
-//                     onPress={() => {
-//                         setIsHidden(!isHidden)
-//                     }}
-//                 />
-//         </View>
-//     )
-// }
-
-// ChatScreen.navigationOptions = navData => {
-//     return {
-//       headerLeft: (
-//         <HeaderButtons HeaderButtonComponent={HeaderButton}>
-//           <Item
-//             title="Menu"
-//             iconName="ios-menu"
-//             onPress={() => {
-//               navData.navigation.toggleDrawer();
-//             }}
-//           />
-//         </HeaderButtons>
-//       )
-//     };
-// };
-
-// const styles = StyleSheet.create({
-//     screen: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center'
-//     }
-// })
-
-// export default ChatScreen
-
-// @refresh reset
-
-// import React, { useState, useEffect, useCallback } from 'react'
-// import { GiftedChat } from 'react-native-gifted-chat'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
-// import { StyleSheet, TextInput, View, YellowBox, Button, LogBox } from 'react-native'
-// import 'firebase/firestore'
-// import firebase from '../firebase/config'
-
-// if (firebase.apps.length === 0) {
-//     firebase.initializeApp(firebaseConfig)
-// }
-
-// LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-
-// const db = firebase.firestore()
-// const chatsRef = db.collection('chat')
-
-// const ChatScreen = (props) => {
-//     const [user, setUser] = useState(null)
-//     const [name, setName] = useState('')
-//     const [messages, setMessages] = useState([])
-
-//     useEffect(() => {
-//         readUser()
-//         const unsubscribe = chatsRef.onSnapshot((querySnapshot) => {
-//             const messagesFirestore = querySnapshot
-//                 .docChanges()
-//                 .filter(({ type }) => type === 'added')
-//                 .map(({ doc }) => {
-//                     const message = doc.data()
-//                     //createdAt is firebase.firestore.Timestamp instance
-//                     //https://firebase.google.com/docs/reference/js/firebase.firestore.Timestamp
-//                     return { ...message, createdAt: message.createdAt.toDate() }
-//                 })
-//                 .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-//             appendMessages(messagesFirestore)
-//         })
-//         return () => unsubscribe()
-//     }, [])
-
-//     const appendMessages = useCallback(
-//         (messages) => {
-//             setMessages((previousMessages) => GiftedChat.append(previousMessages, messages))
-//         },
-//         [messages]
-//     )
-
-//     async function readUser() {
-//         const user = await AsyncStorage.getItem('user')
-//         if (user) {
-//             setUser(JSON.parse(user))
-//         }
-//     }
-//     async function handlePress() {
-//         const _id = Math.random().toString(36).substring(7)
-//         const user = { _id, name }
-//         await AsyncStorage.setItem('user', JSON.stringify(user))
-//         setUser(user)
-//     }
-//     async function handleSend(messages) {
-//         const writes = messages.map((m) => chatsRef.add(m))
-//         await Promise.all(writes)
-//     }
-
-//     if (!user) {
-//         return (
-//             <View style={styles.container}>
-//                 <TextInput style={styles.input} placeholder="Enter Name" value={name} onTextInput={setName}></TextInput>
-//                 <Button onPress={handlePress} title="Enter the chat" />
-//             </View>
-//         )
-//     }
-//     return <GiftedChat messages={messages} user={user} onSend={handleSend} />
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         backgroundColor: '#fff',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//         padding: 30,
-//     },
-//     input: {
-//         height: 50,
-//         width: '100%',
-//         borderWidth: 1,
-//         padding: 15,
-//         marginBottom: 20,
-//         borderColor: 'gray',
-//     },
-// })
-
-// export default ChatScreen
-
-// import React  from 'react';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { navigationRef } from '../navigation/rootNavigation';
-// import { createStackNavigator } from '@react-navigation/stack';
-
-// import Main from '../components/Main'
-// import Chat from '../components/Chat'
-
-// export default function ChatScreen() {
-
-//   const Stack = createStackNavigator();
-
-//   return (
-//       <NavigationContainer ref={navigationRef}>
-//         <Stack.Navigator mode="modal" >
-//           <Stack.Screen name="Main" component={Main} />
-//           <Stack.Screen name="Chat" component={Chat} />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//       container: {
-//           flex: 1,
-//           backgroundColor: '#fff',
-//           alignItems: 'center',
-//           justifyContent: 'center',
-//           padding: 30,
-//       },
-// });
-
-// import React, {useState} from 'react';
-// import { StyleSheet, Text, TextInput, TouchableOpacity, View,} from 'react-native';
-
-// const ChatScreen = props => {
-
-//   const [name, setName] = useState("")
-
-//   const onPress = () =>
-//     props.navigation.navigate('Chats', { name: name });
-
-//   const onChangeText = name => setName(name);
-
-//     return (
-//       <View>
-//         <Text style={styles.title}>Enter your name:</Text>
-//         <TextInput
-//           style={styles.nameInput}
-//           onChangeText={onChangeText}
-//           value={name}
-//         />
-//         <TouchableOpacity onPress={onPress}>
-//           <Text style={styles.buttonText}>Done</Text>
-//         </TouchableOpacity>
-//       </View>
-//     );
-//   }
-
-
-// const offset = 24;
-
-// const styles = StyleSheet.create({
-//   title: {
-//     marginTop: offset,
-//     marginLeft: offset,
-//     fontSize: offset,
-//   },
-//   nameInput: {
-//     height: offset * 2,
-//     margin: offset,
-//     paddingHorizontal: offset,
-//     borderColor: '#111111',
-//     borderWidth: 1,
-//   },
-//   buttonText: {
-//     marginLeft: offset,
-//     fontSize: offset,
-//   },
-// });
-
-// export default ChatScreen;
-
-import React, { useState } from 'react'
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, Touchable } from 'react-native'
 import firebase from '../firebase/config'
 import 'firebase/auth'
-
+import * as ImagePicker from 'expo-image-picker';
 // import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { Ionicons } from '@expo/vector-icons';
+import colors from '../constants/colors';
+import Camera from '../components/Camera';
 // import { auth } from 'react-native-firebase'
 // import { set } from 'react-native-reanimated'
 
@@ -241,12 +15,18 @@ import { useCollectionData } from 'react-firebase-hooks/firestore'
 const firestore = firebase.firestore();
 // const [user] = useAuthState(auth);
 
+
 const ChatScreen = props => {
 
   const messageRef = firestore.collection('chats');
   const query = messageRef.orderBy('createdAt').limit(25);
   const [messages] = useCollectionData(query, { idField: 'id' });
+  const [isHidden, setIsHidden] = useState(false);
   const [formValue, setFormValue] = useState('');
+  const [image, setImage] = useState(null);
+  // const [hasPermission, setHasPermission] = useState(null);
+  // const [type, setType] = useState(Camera.Constants.Type.back);
+
 
   const sendMessage = async () => {
     // const {uid, photoURL} = auth.currentUser;
@@ -260,22 +40,72 @@ const ChatScreen = props => {
     setFormValue('');
   }
 
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.requestPermissionsAsync();
+  //     setHasPermission(status === 'granted');
+  //   })();
+  // }, []);
+
+  // if (hasPermission === null) {
+  //   return <View />;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
+
+
+
   return (
     <View style={styles.container}>
       {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
 
-      <TextInput
-        placeholder="Message"
-        onChangeText={message => setFormValue(message)}
-        value={formValue}
-      />
+      <View style={styles.rowContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Message"
+          onChangeText={message => setFormValue(message)}
+          value={formValue}
+        />
+        <TouchableOpacity
+          activeOpacity={.5}
+          onPress={() => {
+            props.navigation.navigate('Camera')
+          }}
+        >
+          <Ionicons
+            name='camera'
+            size={25}
+            color={colors.accent}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={.5}
+          onPress={pickImage}>
+          <Ionicons
+            name='images'
+            size={25}
+            color={colors.accent}
+          />
+        </TouchableOpacity>
 
-      <Button
-        title='Send'
-        onPress={sendMessage}
-      />
+      </View>
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
     </View>
   )
+
+
 }
 
 const ChatMessage = props => {
@@ -290,13 +120,52 @@ const ChatMessage = props => {
   )
 }
 
-const styles = StyleSheet.create (
-  {
-    container: {
-      width: '100%',
-    }
-  }
-)
+const pickImage = async () => {
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
 
+  console.log(result);
+
+  if (!result.cancelled) {
+    setImage(result.uri);
+  }
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%"
+  },
+  camera: {
+    flex: 1,
+  },
+  buttonContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    margin: 20,
+  },
+  button: {
+    flex: 0.1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 18,
+    color: 'white',
+  },
+  textInput: {
+    flex: 1
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%'
+  }
+});
 
 export default ChatScreen;

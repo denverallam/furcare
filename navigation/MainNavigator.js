@@ -15,6 +15,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AnimalDetailScreen from '../screens/AnimalDetailScreen';
 import DonationScreen from '../screens/DonationScreen';
+import Camera from '../components/Camera';
 
 const defaultStackNavOptions = {
     defaultNavigationOptions: {
@@ -31,10 +32,6 @@ const styles = StyleSheet.create({
     }
 })
 
-const LoginNavigator = createStackNavigator({
-    Login: LoginScreen,
-    Register: RegisterScreen
-})
 
 const HomeNavigator = createStackNavigator({
     Home: {
@@ -76,13 +73,10 @@ const AdoptionNavigator = createStackNavigator({
 }, defaultStackNavOptions)
 
 const ChatNavigator = createStackNavigator({
-    Chat: ChatScreen
+    Chat: ChatScreen,
+    Camera: Camera
 }, defaultStackNavOptions)
 
-
-const UserNavigator = createStackNavigator({
-    User: LogoutScreen
-}, defaultStackNavOptions)
 
 
 const MainNavigator = createMaterialBottomTabNavigator(

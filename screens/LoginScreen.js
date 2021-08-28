@@ -8,26 +8,14 @@ import {
     TouchableOpacity,
     Alert
 } from 'react-native';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import firebase from '../firebase/config'
 import { Ionicons } from '@expo/vector-icons';
+import { login } from '../firebase/user';
 
 
-const LoginScreen = () => {
+const LoginScreen = (props) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(firebase.auth());
-
-    console.log('User: ', user)
-    console.log('Loading: ', loading)
-    console.log('Error:', error)
-
 
     return (
         <View style={styles.container}>
@@ -42,13 +30,13 @@ const LoginScreen = () => {
                 <Text style={styles.text}>Password</Text>
                 <TextInput
                     placeholder="Password"
-                    onChangeText={password => setPassword(password)}
+                    onChangeText={password => { setPassword(password) }}
                     value={password}
                     style={styles.input}
                     secureTextEntry={true}
                 />
             </View >
-            <Button title='Login' onPress={() => signInWithEmailAndPassword(email, password)} />
+            <Button title='Login' onPress={() => login(email, password)} />
             <View style={styles.signIn}>
                 <TouchableOpacity activeOpacity={.5} >
                     <View style={styles.viewRow}>
@@ -63,6 +51,14 @@ const LoginScreen = () => {
                     </View>
                 </TouchableOpacity>
             </View>
+            <TouchableOpacity
+            activeOpacity={.5}
+            onPress={() => {
+                props.navigation.navigate('Register')
+            }}
+            >
+                <Text>Register</Text>
+            </TouchableOpacity>
         </View >
     )
 }

@@ -35,7 +35,8 @@ export const updatePet = (id, newPet) => {
 }
 
 export const fetchAllPets = () => {
-    return (pets.get()
+    return (
+        pets.get()
         .then(snapshot => {
             let petList = []
             snapshot.forEach(doc => {

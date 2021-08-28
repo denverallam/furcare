@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput, Platform, TouchableOpacity } from 'react-native';
-import { addPet, fetchAllPets, updatePet } from '../firebase/adoption';
-import firebase from '../firebase/config';
-import { useDocument } from 'react-firebase-hooks/firestore'
+import { addPet, updatePet } from '../firebase/adoption';
 import * as ImagePicker from 'expo-image-picker';
-import { color } from 'react-native-reanimated';
+
 
 
 
 
 const AddPetForm = (props) => {
+
+    let sex = [{
+        value: 'Male',
+    }, {
+        value: 'Female',
+    }];
 
     const { petInfo } = props
     const [petDetails, setPetDetails] = useState({
@@ -54,6 +58,7 @@ const AddPetForm = (props) => {
 
     return (
         <View style={styles.container}>
+
             <View style={styles.inputContainer}>
                 <Text style={styles.text}>Name</Text>
                 <TextInput style={styles.textInput}
@@ -63,12 +68,18 @@ const AddPetForm = (props) => {
                     style={styles.input}
                 />
                 <Text style={styles.text}>Age</Text>
-                <TextInput style={styles.textInput}
+                <TextInput
+                    style={styles.textInput}
+                    style={styles.input}
                     placeholder="Age"
+                    blurOnSubmit
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    keyboardType="number-pad"
+                    maxLength={3}
                     onChangeText={age => setPetDetails({ ...petDetails, age: age })}
                     value={petDetails.age}
-                    style={styles.input}
-                // secureTextEntry={true}
+                // secureTextEntry={true}               
                 />
                 <Text style={styles.text}>Breed</Text>
                 <TextInput style={styles.textInput}
@@ -84,6 +95,7 @@ const AddPetForm = (props) => {
                     value={petDetails.sex}
                     style={styles.input}
                 />
+
                 <Text style={styles.text}>Size</Text>
                 <TextInput style={styles.textInput}
                     placeholder="Size"
@@ -143,11 +155,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
     },
+    dropdown: {
+        height: 30
+    },
     text: {
         fontSize: 12,
         marginBottom: 10
     },
     input: {
+        height: 30,
         borderBottomWidth: 1,
         borderBottomColor: 'black'
     },
