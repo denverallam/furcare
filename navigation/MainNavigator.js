@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, Image } from 'react-native'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -15,11 +15,15 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AnimalDetailScreen from '../screens/AnimalDetailScreen';
 import DonationScreen from '../screens/DonationScreen';
+import LandingScreen from '../screens/LandingScreen';
+import ReportHeader from '../components/headers/ReportHeader';
+import { processFontFamily } from 'expo-font';
 
 const defaultStackNavOptions = {
     defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: colors.accent
+            backgroundColor: colors.primary,
+            
         },
         headerTintColor: 'white'
     }
@@ -27,7 +31,9 @@ const defaultStackNavOptions = {
 
 const styles = StyleSheet.create({
     text: {
-        color: colors.accent
+        color: colors.accent,
+        fontFamily: 'comfortaa-bold'
+        
     }
 })
 
@@ -38,10 +44,12 @@ const LoginNavigator = createStackNavigator({
 
 const HomeNavigator = createStackNavigator({
     Home: {
-        screen: HomeScreen
+        screen: HomeScreen,
+        //headerTitle: () => <ReportHeader/>
     },
     Report: {
-        screen: ReportScreen
+        screen: ReportScreen,
+        headerTitle: () => <ReportHeader/>
     }
 }, defaultStackNavOptions)
 
@@ -71,7 +79,7 @@ const AdoptionNavigator = createStackNavigator({
         }
     },
     Chat: {
-        screen: ChatScreen
+        screen: ChatScreen,
     }
 }, defaultStackNavOptions)
 
@@ -84,7 +92,10 @@ const UserNavigator = createStackNavigator({
     User: LogoutScreen
 }, defaultStackNavOptions)
 
-
+/* const LandingScreenNavigation = createStackNavigator({
+    Landing: LandingScreen,
+}, defaultStackNavOptions)
+ */
 const MainNavigator = createMaterialBottomTabNavigator(
     {
         Home: {
