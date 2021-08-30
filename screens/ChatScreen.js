@@ -19,13 +19,12 @@ const ChatScreen = props => {
   const [user] = useAuthState(auth);
 
   const messageRef = firestore.collection('chats');
-  const query = messageRef.orderBy('createdAt').limit(25);
+  const query = messageRef.orderBy('createdAt');
   const [messages] = useCollectionData(query, { idField: 'id' });
   const [formValue, setFormValue] = useState('');
   const [image, setImage] = useState(null);
   // const [hasPermission, setHasPermission] = useState(null);
   // const [type, setType] = useState(Camera.Constants.Type.back);
-
 
   useEffect(() => {
     (async () => {
@@ -50,8 +49,6 @@ const ChatScreen = props => {
       setImage(result.uri);
     }
   };
-
-  console.log(image)
 
   const sendMessage = async () => {
     const { uid, photoURL } = auth.currentUser;
@@ -93,7 +90,7 @@ const ChatScreen = props => {
 
       <View style={styles.rowContainer}>
         {
-          image ? <Image source={{ uri: image }} style={styles.image}/>
+          image ? <Image source={{ uri: image }} style={styles.image} />
             :
             <TextInput
               style={styles.textInput}
@@ -147,16 +144,17 @@ const ChatScreen = props => {
 const ChatMessage = props => {
   const { text, uid, image } = props.message;
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-  console.log(uid)
+
   return (
     <View style={messageClass === 'sent' ? styles.right : styles.left}>
-      {image
-        ? <Image source={{ uri: image }} style={styles.image} />
-        : <View style={messageClass === 'sent' ? styles.sent : styles.received}>
-          <Text style={messageClass === 'sent' ? styles.white : styles.black}>
-            {text}
-          </Text>
-        </View>
+      {
+        image
+          ? <Image source={{ uri: image }} style={styles.image} />
+          : <View style={messageClass === 'sent' ? styles.sent : styles.received}>
+            <Text style={messageClass === 'sent' ? styles.white : styles.black}>
+              {text}
+            </Text>
+          </View>
       }
     </View>
 

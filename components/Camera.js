@@ -1,104 +1,71 @@
-import React, { useEffect, useRef, useState } from "react";
-import { TouchableOpacity, View, StyleSheet, Text } from "react-native";
-import { Camera } from "expo-camera";
-
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Button, Image } from 'react-native';
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
 
 const CameraScreen = (props) => {
+  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [camera, setCamera] = useState(null);
+  const [image, setImage] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
-    const [hasPermission, setHasPermission] = useState(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
-    const [image, setImage] = useState('')
+  useEffect(() => {
+    (async () => {
+      const cameraStatus = await Camera.requestPermissionsAsync();
+      setHasCameraPermission(cameraStatus.status === 'granted');
 
-    const cameraRef = useRef()
+      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setHasGalleryPermission(galleryStatus.status === 'granted');
 
-    useEffect(() => {
-        (async () => {
-            const { status } = await Camera.requestPermissionsAsync();
-            setHasPermission(status === 'granted');
-        })();
-    }, []);
+    })();
+  }, []);
 
-    if (hasPermission === null) {
-        return <View />;
+  const takePicture = async () => {
+    if(camera){
+      const data = await camera.takePictureAsync(null);
+      setImage(data.uri)
     }
-    if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
-    }
+  }
 
-    const takePicture = async () => {
-        if (cameraRef.current) {
-            const options = { quality: 0.7, base64: true };
-            const data = await cameraRef.current.takePictureAsync(options);
-            const source = data.base64;
-            setImage(source)
-            console.log(image)
-            if (source) {
-                await cameraRef.current.pausePreview();
-                setIsPreview(true);
-            }
+  if (hasCameraPermission === null || hasGalleryPermission === false) {
+    return <View />;
+  }
+  if (hasCameraPermission === false || hasGalleryPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+  return (
+    <View style={{flex: 1}}>
+      <View style={styles.cameraContainer}>
+        <Camera ref={ref => setCamera(ref)} style={styles.fixedRatio} type={type} ratio={'1:1'} />
+      </View>
 
-        }
-
-    };
-
-
-    console.log(image)
-
-    return (
-        <View style={styles.container}>
-            <Camera style={styles.camera} type={type} ref={cameraRef}>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => {
-                            setType(
-                                type === Camera.Constants.Type.back
-                                    ? Camera.Constants.Type.front
-                                    : Camera.Constants.Type.back
-                            );
-                        }}>
-                        <Text style={styles.text}> Flip </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => takePicture()}>
-                        <Text style={styles.text}>Capture</Text>
-                    </TouchableOpacity>
-                </View>
-            </Camera>
-
-        </View>
-    )
+      <Button
+        title="Flip Image"
+        onPress={() => {
+          setType(
+            type === Camera.Constants.Type.back
+              ? Camera.Constants.Type.front
+              : Camera.Constants.Type.back
+          );
+        }}>
+      </Button>
+      <Button title="Take Picture" onPress={() => takePicture()}/>
+      {image && <Image source={{uri: image}} style={{flex: 1}}/>}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: "100%"
-    },
-    camera: {
-        flex: 1,
-    },
-    buttonContainer: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-        margin: 20,
-    },
-    button: {
-        flex: 0.1,
-        alignSelf: 'flex-end',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 18,
-        color: 'white',
-    },
-    textInput: {
-        flex: 1
-    },
-    rowContainer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        width: '100%'
-    }
+  cameraContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  fixedRatio: {
+    flex: 1,
+    aspectRatio: 1
+  }
 });
-export default CameraScreen
+
+
+export default CameraScreen;

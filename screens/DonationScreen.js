@@ -13,6 +13,7 @@ const DonationScreen = props => {
     const [donationDetails, setDonationDetails] = useState({})
     const [donationList] = useCollectionData(donationQuery)
     const [isHidden, setIsHidden] = useState(true)
+    const [totalAmount, setTotalAmount] = useState(0)
 
     const renderGridItem = itemData => {
         return <DonationTile donation={itemData.item} navigation={props.navigation} setIsHidden={setIsHidden} isHidden={isHidden} setDonationDetails={setDonationDetails} />
@@ -21,16 +22,29 @@ const DonationScreen = props => {
         setIsHidden(!isHidden)
     }
 
+    const totalDonation = () => {
+        let total = 0;
+        if (donationList) {
+            donationList.map(donation => {
+                if (donation.amount) {
+                    total += parseInt(donation.amount)
+                }
+            })
+        }
+        console.log("console total:", total)
+        return total
+    }
+
+    useEffect(() => {
+        let total = totalDonation()
+        setTotalAmount(total)
+    }, [totalDonation])
+
     return (
         <View style={styles.screen}>
-            <Button
-                title={isHidden ? 'Add Donation' : 'Hide Form'}
-                // onPress={() => addPet()}
-                onPress={() => {
-                    setIsHidden(!isHidden)
-                    setDonationDetails({})
-                }}
-            />
+            <View style={styles.centerText}>
+                <Text>Total: {totalAmount}</Text>
+            </View>
             {
                 isHidden
                     ? <FlatList
@@ -41,6 +55,14 @@ const DonationScreen = props => {
                     />
                     : <AddDonationForm hideForm={setIsHidden} hide={isHidden} donationInfo={donationDetails} />
             }
+            <Button
+                title={isHidden ? 'Add Donation' : 'Hide Form'}
+                // onPress={() => addPet()}
+                onPress={() => {
+                    setIsHidden(!isHidden)
+                    setDonationDetails({})
+                }}
+            />
         </View>
 
     )
@@ -63,6 +85,9 @@ const DonationScreen = props => {
 // };
 
 const styles = StyleSheet.create({
+    centerText: {
+        alignItems: 'center'
+    },
     screen: {
         flex: 1,
         justifyContent: 'center'

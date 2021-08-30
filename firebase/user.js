@@ -16,7 +16,7 @@ export const register = user => {
         .then(result => {
             const id = firebase.auth().currentUser.uid
             users
-                .doc(firebase.auth().currentUser.uid)
+                .doc(id)
                 .set({ email, password, firstName, lastName, id })
         })
         .catch(err => {

@@ -25,14 +25,6 @@ const AdoptionScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <Button
-                title={isHidden ? 'Add Pet' : 'Hide Form'}
-                // onPress={() => addPet()}
-                onPress={() => {
-                    setIsHidden(!isHidden)
-                    setPetDetail({})
-                }}
-            />
             {
                 isHidden
                     ? <FlatList
@@ -43,6 +35,14 @@ const AdoptionScreen = props => {
                     />
                     : <AddPetForm hideForm={setIsHidden} hide={isHidden} petInfo={petDetail} />
             }
+            <Button
+                title={isHidden ? 'Add Pet' : 'Hide Form'}
+                // onPress={() => addPet()}
+                onPress={() => {
+                    setIsHidden(!isHidden)
+                    setPetDetail({})
+                }}
+            />
         </View>
 
     )
